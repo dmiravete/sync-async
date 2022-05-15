@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.3",
-    "amqplib": "0.9.1"
+    "express-simulate-latency": "0.0.2",
+    "express-cluster": "0.0.5"
   }
 }
