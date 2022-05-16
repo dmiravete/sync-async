@@ -3,6 +3,8 @@ const app = express()
 const cluster = require('express-cluster');
 const port = 3002
 
+
+// Runs in cluster. Allowing the use of some threads
 cluster(function(worker) {
 
   app.use(express.json())
@@ -16,11 +18,11 @@ cluster(function(worker) {
     let correlationId = req.headers['correlation-id']
     let replyTo = req.headers['reply-to']
     
-
     console.log('Input:  ' + correlationId)
     
-
+    // Lag generator
     setTimeout(function(){
+      // Call to callback method
       callback(body, correlationId, replyTo)
       res.end()
     }, 4000);
