@@ -1,7 +1,7 @@
 const express = require('express')
 const EventEmitter = require('events')
 const eventEmitter = new EventEmitter();
-const amqp = require('./amq')
+const stompit = require('./stompit')
 const app = express()
 const port = 3000
 
@@ -9,20 +9,20 @@ const port = 3000
 app.use(express.json())
 
 // Queue Initialization
-amqp.init(eventEmitter)
+stompit.init(eventEmitter)
 
 
 // Exposed service to make the load
 app.post('/load',(req,res) => {
   
-  correlation = amqp.emit(req.body)
-  console.log("generated: " + correlation)
+  correlation = stompit.emit(req.body);
+  console.log("generated: " + correlation);
   
   // Wait for the event emitted & reponse
   eventEmitter.once(correlation, msg => {
-    console.log("Emited:     " + correlation)
-    res.write(msg)
-    res.end()
+    console.log("Emited:     " + correlation);
+    res.write(msg);
+    res.end();
   })
 })
 

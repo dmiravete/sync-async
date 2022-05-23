@@ -1,5 +1,5 @@
 const express = require('express')
-const amqp = require('./amq')
+const stompit = require('./stompit')
 const app = express()
 const port = 3001
 
@@ -7,7 +7,7 @@ const port = 3001
 app.use(express.json())
 
 // Queue Initialization
-amqp.init()
+stompit.init()
 
 
 /*
@@ -19,7 +19,7 @@ app.post('/callback',(req,res) => {
   let replyTo = req.headers['reply-to']
   res.end()
 
-  amqp.replyCallback(data, correlationId, replyTo)
+  stompit.replyCallback(data, correlationId, replyTo)
   
 })
 
